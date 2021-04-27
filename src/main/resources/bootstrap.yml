@@ -1,0 +1,172 @@
+spring:
+  profiles:
+    active: test
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+---
+server:
+  port: 8888
+spring:
+  profiles: alone
+  application:
+    name: configserver
+  cloud:
+    config:
+      server:
+        git:
+          #          uri: https://g.qiuxianruoke.com/sanya-ecs/sanya-ecs-source-config-data.git #
+          #          username: configserver
+          #          password: cs@20201110
+          #          search-paths: sanyaecs #
+          #          default-label: master #
+          uri: http://10.196.92.38:10080/gogslibcdf_test/new_config.git
+          username: cdf
+          password: gogs@ci
+          search-paths: sanyaecs  #
+          default-label: master #
+          skipSslValidation: true
+
+---
+server:
+  port: 8888
+spring:
+  profiles: dev
+  application:
+    name: configserver
+  cloud:
+    config:
+      server:
+        git:
+          #          uri: https://g.qiuxianruoke.com/sanya-ecs/sanya-ecs-source-config-data.git #
+          #          username: configserver
+          #          password: cs@20201110
+          #          search-paths: sanyaecs #
+          #          default-label: master #
+          uri: http://47.115.90.151:10080/cdf/config.git
+          username: cdf
+          password: gogs@ci
+          search-paths: sanyaecs  #
+          default-label: master #
+          skipSslValidation: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://cdf:cdf@127.0.0.1:22001/eureka/
+  instance:
+    prefer-ip-address: true #
+    #    #
+    #    ip-address: 10.200.207.115
+    #    #
+    #    non-secure-port: 8809
+    lease-renewal-interval-in-seconds: 60 #
+    lease-expiration-duration-in-seconds: 120 #
+
+---
+server:
+  port: 8888
+spring:
+  profiles: test
+  application:
+    name: configserver
+  cloud:
+    config:
+      server:
+        git:
+          #          uri: http://81.71.97.180:10080/gogslibcdf_test/config.git (
+          uri: http://10.196.92.38:10080/gogslibcdf_test/new_config.git # (
+          username: gogslibcdf_test
+          password: gogslibcdf_test
+          search-paths: sanyaecs  #
+          default-label: master #
+          skipSslValidation: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://cdf:cdf@10.196.92.35:22001/eureka/
+  instance:
+    prefer-ip-address: true #
+    #
+    ip-address: 10.196.92.35
+    #
+    non-secure-port: ${server.port}
+    lease-renewal-interval-in-seconds: 60 #
+    lease-expiration-duration-in-seconds: 120 #
+
+---
+server:
+  port: 8888
+spring:
+  profiles: prod
+  application:
+    name: configserver
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://g.qiuxianruoke.com/sanya-ecs/sanya-ecs-source-config-data.git #
+          username: configserver
+          password: cs@20201110
+          search-paths: sanyaecs #
+          default-label: master #
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://cdf:cdf@127.0.0.1:22001/eureka/ #Server
+  instance:
+    prefer-ip-address: true #
+    lease-renewal-interval-in-seconds: 60 #
+    lease-expiration-duration-in-seconds: 120 #
+
+---
+server:
+  port: 23001
+spring:
+  profiles: uat
+  application:
+    name: configserver
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://10.200.207.115:10080/cdf/config.git
+          username: cdf
+          password: gogs@ci
+          search-paths: sanyaecs  #
+          skipSslValidation: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://cdf:cdf@10.200.207.112:22002/eureka/
+  instance:
+    prefer-ip-address: true #
+    lease-renewal-interval-in-seconds: 60 #
+    lease-expiration-duration-in-seconds: 120 #
+
+---
+server:
+  port: 23001
+spring:
+  profiles: gray
+  application:
+    name: configserver
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://10.200.207.115:10080/cdf/config.git
+          username: cdf
+          password: gogs@ci
+          search-paths: sanyaecs  #
+          skipSslValidation: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://cdf:cdf@10.200.207.113:22002/eureka/
+  instance:
+    prefer-ip-address: true #
+    lease-renewal-interval-in-seconds: 60 #
+    lease-expiration-duration-in-seconds: 120 #

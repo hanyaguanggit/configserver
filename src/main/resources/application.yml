@@ -1,0 +1,23 @@
+server:
+  port: 9999
+
+spring:
+  application:
+    name: configserver
+  security:
+    user:
+      name: cdf
+      password: cdf
+logging:
+  level:
+    org.springframework.cloud.bus: debug
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    config:
+      maxTotal: 1000
+      maxIdle: 1000
+      maxWaitMillis: 100000
